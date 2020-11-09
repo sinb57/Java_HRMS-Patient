@@ -33,7 +33,7 @@ public class SocketHandler {
 		return responseData;
 	}
 	
-	public StringTokenizer requestPatientInfo(String token) {
+	public StringTokenizer requestSelfInfo(String token) {
 		
 		String requestData = "GET /auth/me";
 		requestData += "\n" + token;
@@ -42,13 +42,13 @@ public class SocketHandler {
 		
 		String responseHeader = responseData.nextToken();
 		
-		if (responseHeader.equals("Get Patient Info Failed"))
+		if (responseHeader.equals("Get Self Info Failed"))
 			return null;
 
 		return responseData;
 	}
 	
-	public boolean modifyPatientPw(String token, String passwd) {
+	public boolean modifySelfPw(String token, String passwd) {
 		
 		String requestData = "PUT /auth/me";
 		requestData += "\n" + token;
@@ -58,7 +58,7 @@ public class SocketHandler {
 		
 		String responseHeader = responseData.nextToken();
 		
-		if (responseHeader.equals("Modify Failed"))
+		if (responseHeader.equals("Modify Self Password Failed"))
 			return false;
 		
 		return true;

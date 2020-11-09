@@ -31,7 +31,7 @@ public class PatientService {
 
 		String token = patient.getToken();
 		
-		StringTokenizer tokenizer = socketHandler.requestPatientInfo(token);
+		StringTokenizer tokenizer = socketHandler.requestSelfInfo(token);
 		
 		patient.read(tokenizer);
 		
@@ -46,7 +46,7 @@ public class PatientService {
 		
 			String token = patient.getToken();
 			
-			if (socketHandler.modifyPatientPw(token, passwd))
+			if (socketHandler.modifySelfPw(token, passwd))
 				return true;
 		}
 		
