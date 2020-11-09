@@ -11,15 +11,19 @@ public class Patient {
     private Long point;
     private ArrayList<Reservation> reservationList = new ArrayList<>();
     
+    public void init(StringTokenizer dataTokenizer) {
+    	token = dataTokenizer.nextToken();
+    	read(dataTokenizer);
+    }
 
     public void read(StringTokenizer dataTokenizer) {
-    	token = dataTokenizer.nextToken();
     	patientId = dataTokenizer.nextToken();
     	patientName = dataTokenizer.nextToken();
     	phoneNumber = dataTokenizer.nextToken();
+    	point = Long.parseLong(dataTokenizer.nextToken());
     }
     
-    // 임시 메소드 -> GUI 연동시 삭제
+    // Temporary Method -> Drop after GUI linked
     public void print() {
     	System.out.printf("[%s] 이름: %s / 번호: %s", patientId, patientName, phoneNumber);
     	System.out.println();
@@ -42,6 +46,7 @@ public class Patient {
     }
 
     
+
     public String getPatientId() {
     	return patientId;
     }
@@ -54,23 +59,12 @@ public class Patient {
     	return this.phoneNumber;
     }
     
-    public void setPhoneNumber(String phoneNumber) {
-    	this.phoneNumber = phoneNumber;
-    }
-    
     public String getToken() {
     	return this.token;
-    }
-    
-    public void setToken(String token) {
-    	this.token = token;
     }
     
     public ArrayList<Reservation> getReservationList() {
     	return this.reservationList;
     }
-    
-    public void setReservationList(ArrayList<Reservation> reservationList) {
-    	this.reservationList = reservationList;
-    }
+
 }

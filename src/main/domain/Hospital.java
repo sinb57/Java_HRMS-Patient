@@ -1,9 +1,6 @@
 package main.domain;
 
-
-import java.util.Scanner;
 import java.util.StringTokenizer;
-
 
 public class Hospital {
     private String hospitalId;
@@ -27,11 +24,13 @@ public class Hospital {
     	}
     }
     
+    // Temporary Method -> Drop after GUI linked
     public void print() {
     	System.out.printf("[%s] 이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
     	System.out.println();
     }
 
+    // Temporary Method -> Drop after GUI linked
     public void printDetail() {
     	System.out.printf("[%s] 이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
     	System.out.println();
@@ -58,14 +57,5 @@ public class Hospital {
     public String getAddress() {
     	return address;
     }
-    
-    public void setPhoneNumber(String phoneNumber) {
-    	this.phoneNumber = phoneNumber;
-    }
-    
-    public void setAddress(String address) {
-    	this.address = address;
-    }
-    
     
 }

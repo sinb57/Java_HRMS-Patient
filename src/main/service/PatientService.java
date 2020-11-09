@@ -7,7 +7,7 @@ import main.domain.*;
 import main.socket.SocketHandler;
 
 public class PatientService {
-	public Patient patient = new Patient();
+	private Patient patient = new Patient();
 	private ArrayList<Hospital> hospitalList;
 	private SocketHandler socketHandler = new SocketHandler();
 	
@@ -20,8 +20,7 @@ public class PatientService {
 		
 		StringTokenizer tokenizer = socketHandler.login(userId, userPw);
 		
-		patient.setToken(tokenizer.nextToken());
-		patient.read(tokenizer);
+		patient.init(tokenizer);
 		
 		return true;
 	}
@@ -104,7 +103,7 @@ public class PatientService {
     	
 		while (tokenizer.hasMoreTokens()) {
 			Reservation reservation = new Reservation();
-			reservation.read(tokenizer, patient);
+			reservation.init(tokenizer, patient);
 		}
 		
 		return (patient.getReservationList());
@@ -119,7 +118,7 @@ public class PatientService {
 		
 		Reservation reservation = patient.getReservation(reservationId);
 		
-		reservation.modify(tokenizer);
+		reservation.read(tokenizer);
 		
 		return reservation;
 	}
