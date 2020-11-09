@@ -1,16 +1,66 @@
 package main.domain;
 
-import java.time.LocalDateTime;
+
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
 
 public class Hospital {
     private String hospitalId;
-    private String name;
+    private String hospitalName;
     private String phoneNumber;
     private String address;
-    private LocalDateTime careTime;
+    private String careTime;
     
-    public void read(/**/) {
-    	/**/
+    public void read(StringTokenizer dataTokenizer) {
+    	hospitalId = dataTokenizer.nextToken();
+    	hospitalName = dataTokenizer.nextToken();
+    	phoneNumber = dataTokenizer.nextToken();
+    	address = dataTokenizer.nextToken();
+    	careTime = "";
+    	
+    	String boundary = dataTokenizer.nextToken();
+    	String data = dataTokenizer.nextToken();
+    	
+    	while (boundary.equals(data) == false) {
+    		careTime += dataTokenizer.nextToken();
+    	}
+    }
+    
+    public void print() {
+    	System.out.printf("[%s] 이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
+    	System.out.println();
+    }
+
+    public void printDetail() {
+    	System.out.printf("[%s] 이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
+    	System.out.println();
+    	System.out.printf("/t %s", address);
+    	System.out.println();
+    }
+    
+    public String getHospitalId() {
+    	return this.hospitalId;
+    }
+    
+    public String getHospitalName() {
+    	return this.hospitalName;
+    }
+    
+    public String getPhoneNumber() {
+    	return this.phoneNumber;
+    }
+
+    public String getAddress() {
+    	return address;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+    	this.phoneNumber = phoneNumber;
+    }
+    
+    public void setAddress(String address) {
+    	this.address = address;
     }
     
     
