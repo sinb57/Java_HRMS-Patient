@@ -1,9 +1,6 @@
 package main.service;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import main.domain.*;
@@ -68,24 +65,23 @@ public class PatientService {
 	}
 	
 
-	public void requestReservation(Scanner keyScanner) {
-		Reservation r = null;
-		r = new Reservation();
-		int days = keyScanner.nextInt();
-		int hours = keyScanner.nextInt();
-		int minutes =  keyScanner.nextInt();
-	}
+    public ArrayList<Reservation> getReservationList(String reservationId) {
+    	
+    	
+    	
+    	reservationList = socketHandler.getReservationList(token, hospitalId);
+    	
+    	return reservationList;
+    }
 	
-	// 대기번호
-	public void waitingNum(String ID) {
-		if(patient.matches(ID)) {
-			for (Reservation r : reservationList) {
-				System.out.printf("대기 순번은 [ %d 번] 입니다. ", r.getReservationID());
-			}
-		}
+	public int getWatingNumber(long reservationId) {
 		
+		String token = patient.getToken();
+		
+		
+		
+		return 0;
 	}
 
-
-	
+ 
 }

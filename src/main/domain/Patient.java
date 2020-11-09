@@ -1,18 +1,16 @@
 package main.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Patient {
-	private String token;
     private String patientId;
     private String patientName;
     private String phoneNumber;
+	private String token;
     private Long point;
-    private List<Reservation> reservationList = new ArrayList<>();
+    private ArrayList<Reservation> reservationList = new ArrayList<>();
     
 
     public void read(StringTokenizer dataTokenizer) throws ArrayIndexOutOfBoundsException {
@@ -22,6 +20,7 @@ public class Patient {
     	phoneNumber = dataTokenizer.nextToken();
     }
     
+    // 임시 메소드 -> GUI 연동시 삭제
     public void print() {
     	System.out.printf("[%s] 이름: %s / 번호: %s", patientId, patientName, phoneNumber);
     	System.out.println();
@@ -30,38 +29,7 @@ public class Patient {
     public String getPatientId() {
     	return patientId;
     }
-    
-    public boolean matches(String patientId) {
-    	if (this.patientId.contentEquals(patientId))
-    		return true;
-    	return false;
-    }
-    
-    public void addReservation(Reservation reservation) {
-    	reservationList.add(reservation);
-    }
-    
-	public void popReservation(Reservation reservation) {
-		int index = reservationList.indexOf(reservation);
-		
-		if (index == -1)
-			return;
-		
-		reservationList.remove(index);
-	}
-	
-	private int indexOf(Reservation reservationI) {
-		int index = 0;
-		long reservationId = 0;
-		
-		for (Reservation reservation: reservationList) {
-			reservationId = reservation.getReservationID();
-			if (reservationI.matches(reservationId))	
-				return index;			
-			index++;
-		}
-		return -1;
-	}
+
     public String getPatientName() {
     	return this.patientName;
     }
@@ -77,5 +45,12 @@ public class Patient {
     public String getToken() {
     	return this.token;
     }
-	
+    
+    public ArrayList<Reservation> getReservationList() {
+    	return this.reservationList;
+    }
+    
+    public void setReservationList(ArrayList<Reservation> reservationList) {
+    	this.reservationList = reservationList;
+    }
 }

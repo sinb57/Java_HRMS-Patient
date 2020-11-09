@@ -30,8 +30,8 @@ public class PatientApplication {
         // 회원정보 출력
         printPatient();
         
-        //
-        
+        // 병원찾기
+        searchHospital();
 	}
 	
 	// 회원정보 출력
@@ -61,15 +61,34 @@ public class PatientApplication {
 	
 	
 	public void searchHospital() {
-		int pageNum = 0;
+		
+		System.out.println("병원 검색 기능입니다.");
+		
+		System.out.printf("페이지 번호 -> ");
+		int pageNum = scan.nextInt();
+
+		System.out.printf("키워드 -> ");
 		String keyword = scan.nextLine();
 		
 		ArrayList<Hospital> hospitalList = service.getHospitalList(pageNum, keyword);
 		
 		for (Hospital hospital: hospitalList)
-			hospital.print();
-		
+			hospital.print();		
 	}
+	
+	
+	public void printReservationList() {
+		
+		System.out.println("예약 목록입니다.");
+
+		ArrayList<Reservation> reservationList = service.getReservationList();
+		
+		for (Reservation reservation: reservationList) {
+			reservation.print();
+		}
+	}
+	
+
 	
     public static void main(String args[]){
     	PatientApplication app = new PatientApplication();
