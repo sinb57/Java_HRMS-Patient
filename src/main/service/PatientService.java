@@ -7,33 +7,39 @@ import main.domain.*;
 import main.socket.SocketHandler;
 
 public class PatientService {
-	public static Patient patient = new Patient();
+	public Patient patient = new Patient();
 	private ArrayList<Hospital> hospitalList;
-	private ArrayList<Reservation> reservationList;
 	private SocketHandler socketHandler = new SocketHandler();
 	
 	public boolean connect(String ipAddress, int port) {
 		return socketHandler.run(ipAddress, port);
 	}
 	
-	// 환자 로그인
+	// Login
 	public boolean login(String userId, String userPw) {
 		
-		StringTokenizer responseData = socketHandler.login(userId, userPw);
+		StringTokenizer tokenizer = socketHandler.login(userId, userPw);
 		
-		try {
-			patient.read(responseData);
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
-			return false;
-		}
+		patient.setToken(tokenizer.nextToken());
+		patient.read(tokenizer);
 		
 		return true;
 	}
 	
+	// Return Patient
+	public Patient getPatient() {
+
+		String token = patient.getToken();
+		
+		StringTokenizer tokenizer = socketHandler.requestPatientInfo(token);
+		
+		patient.read(tokenizer);
+		
+		return patient;
+	}
 
 
-	// 개인정보수정
+	// Modify Self Info
 	public boolean modifyPatientPw(String passwd, String passwd2) {
 
 		if (passwd.equals(passwd2)) {
@@ -47,6 +53,8 @@ public class PatientService {
 		return false;
 	}
 	
+	// Return Hospital List
+	// Include Search function
 	public ArrayList<Hospital> getHospitalList(int pageNum, String keyword) {
 		
 		String token = patient.getToken();
@@ -59,29 +67,62 @@ public class PatientService {
 		
 		keyword = keyword.trim();
 
-		hospitalList = socketHandler.searchHospitalList(token, pageNum, keyword);
+		StringTokenizer tokenizer = socketHandler.requestHospitalList(token, pageNum, keyword);
+		
+		hospitalList.clear();
+		
+		while (tokenizer.hasMoreTokens()) {
+			Hospital hospital = new Hospital();
+			hospital.read(tokenizer);
+		}
 		
 		return hospitalList;
 	}
 	
-
-    public ArrayList<Reservation> getReservationList(String reservationId) {
-    	
-    	
-    	
-    	reservationList = socketHandler.getReservationList(token, hospitalId);
-    	
-    	return reservationList;
-    }
-	
-	public int getWatingNumber(long reservationId) {
+	// Return Specific Hospital
+	public Hospital getHospital(String hospitalId) {
 		
 		String token = patient.getToken();
 		
+		StringTokenizer tokenizer = socketHandler.requestHospitalInfo(token, hospitalId);
 		
-		
-		return 0;
-	}
+		Hospital hospital = new Hospital();
 
+		hospital.read(tokenizer);
+		
+		return hospital;
+	}
+	
+	// Return Reservation List
+    public ArrayList<Reservation> getReservationList() {
+    	
+    	String token = patient.getToken();
+    	
+    	StringTokenizer tokenizer = socketHandler.requestReservationList(token);
+    	
+    	patient.clearReservationList();
+    	
+		while (tokenizer.hasMoreTokens()) {
+			Reservation reservation = new Reservation();
+			reservation.read(tokenizer, patient);
+		}
+		
+		return (patient.getReservationList());
+    }
+    
+    // Return Reservation Info
+	public Reservation getReservation(long reservationId) {
+
+		String token = patient.getToken();
+		
+		StringTokenizer tokenizer = socketHandler.requestReservationInfo(token, Long.toString(reservationId));
+		
+		Reservation reservation = patient.getReservation(reservationId);
+		
+		reservation.modify(tokenizer);
+		
+		return reservation;
+	}
+	
  
 }

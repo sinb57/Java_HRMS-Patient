@@ -1,10 +1,6 @@
 package main.socket;
 
-import java.util.ArrayList;
 import java.util.StringTokenizer;
-
-import main.domain.Hospital;
-import main.domain.Reservation;
 
 public class SocketHandler {
 
@@ -37,6 +33,21 @@ public class SocketHandler {
 		return responseData;
 	}
 	
+	public StringTokenizer requestPatientInfo(String token) {
+		
+		String requestData = "GET /auth/me";
+		requestData += "\n" + token;
+		
+		StringTokenizer responseData = client.request(requestData);
+		
+		String responseHeader = responseData.nextToken();
+		
+		if (responseHeader.equals("Get Patient Info Failed"))
+			return null;
+
+		return responseData;
+	}
+	
 	public boolean modifyPatientPw(String token, String passwd) {
 		
 		String requestData = "PUT /auth/me";
@@ -53,7 +64,7 @@ public class SocketHandler {
 		return true;
 	}
 	
-	public ArrayList<Hospital> searchHospitalList(String token, int pageNum, String keyword) {
+	public StringTokenizer requestHospitalList(String token, int pageNum, String keyword) {
 		
 		String requestData = "GET /hospitals/" + pageNum;
 		requestData += "\n" + token;
@@ -65,20 +76,29 @@ public class SocketHandler {
 		
 		if (responseHeader.equals("Get Hospital List Failed"))
 			return null;
-		
-		ArrayList<Hospital> hospitalList = new ArrayList<>();
-		
-		while (responseData.hasMoreTokens()) {
-			Hospital hospital = new Hospital();
-			hospital.read(responseData);
-		}
-		
-		return hospitalList;
+
+		return responseData;
 	}
+	
+	public StringTokenizer requestHospitalInfo(String token, String hospitalId) {
+		
+		String requestData = "GET /hospitals/" + hospitalId;
+		requestData += "\n" + token;
+		
+		StringTokenizer responseData = client.request(requestData);
+		
+		String responseHeader = responseData.nextToken();
+		
+		if (responseHeader.equals("Get Hospital Info Failed"))
+			return null;
+		
+		return responseData;
+	}
+	
 	
 	public boolean makeReservation(String token, String hospitalId, String reservationDate, String reservationTime) {
 		
-		String requestData = "POST /hospitals/reservations/" + hospitalId;
+		String requestData = "POST /patients/reservations/" + hospitalId;
 		requestData += "\n" + token;
 		requestData += "\n" + reservationDate;
 		requestData += "\n" + reservationTime;
@@ -93,23 +113,32 @@ public class SocketHandler {
 		return true;
 	}
 	
-	public ArrayList<Reservation> getReservationList(String token, String hospitalId) {
-		String requestData = "GET /hospitals/reservations/" + hospitalId;
+	public StringTokenizer requestReservationList(String token) {
+		String requestData = "GET /hospitals/reservations";
 		requestData += "\n" + token;
 
 		StringTokenizer responseData = client.request(requestData);
 		
 		String responseHeader = responseData.nextToken();
 		
-		if (responseHeader.equals("Make Reservation Failed"))
+		if (responseHeader.equals("Get Reservation List Failed"))
 			return null;
 		
-		ArrayList<Reservation> reservationList = new ArrayList<>(); 
-		while (responseData.hasMoreTokens()) {
-			Hospital hospital = new Hospital();
-			hospital.read(responseData);
-		}
+		return responseData;
+	}
+	
+	public StringTokenizer requestReservationInfo(String token, String reservationId) {
+
+		String requestData = "GET /patients/reservations/" + reservationId;
+		requestData += "\n" + token;
+
+		StringTokenizer responseData = client.request(requestData);
+
+		String responseHeader = responseData.nextToken();
 		
-		return reservationList;
+		if (responseHeader.equals("Get Reservation Info Failed"))
+			return null;
+		
+		return responseData;
 	}
 }

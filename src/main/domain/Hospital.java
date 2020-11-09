@@ -35,7 +35,11 @@ public class Hospital {
     public void printDetail() {
     	System.out.printf("[%s] 이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
     	System.out.println();
-    	System.out.printf("/t %s", address);
+    	System.out.printf("주소: %s", address);
+    	System.out.println();
+    	System.out.printf("진료시간\n");
+    	System.out.println();
+    	System.out.printf("%s", careTime);
     	System.out.println();
     }
     

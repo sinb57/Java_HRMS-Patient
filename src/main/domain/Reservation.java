@@ -9,12 +9,22 @@ public class Reservation {
 	private String reservationTime;
 	private int waitingNum;
 	
-    public void read(StringTokenizer dataTokenizer) {
+    public void read(StringTokenizer dataTokenizer, Patient patient) {
     	reservationId = Long.parseLong(dataTokenizer.nextToken());
     	hospitalId = dataTokenizer.nextToken();
     	reservationDate = dataTokenizer.nextToken();
     	reservationTime = dataTokenizer.nextToken();
-    	waitingNum = -1;
+    	waitingNum = Integer.parseInt(dataTokenizer.nextToken());
+    	
+    	patient.addReservation(this);
+    }
+    
+    public void modify(StringTokenizer dataTokenizer) {
+    	reservationId = Long.parseLong(dataTokenizer.nextToken());
+    	hospitalId = dataTokenizer.nextToken();
+    	reservationDate = dataTokenizer.nextToken();
+    	reservationTime = dataTokenizer.nextToken();
+    	waitingNum = Integer.parseInt(dataTokenizer.nextToken());
     }
 	
     public boolean matches(long reservationId) {
@@ -37,4 +47,7 @@ public class Reservation {
     	System.out.println();
     }
 	
+    public long getReservationID() {
+    	return this.reservationId;
+    }
 }

@@ -36,7 +36,7 @@ public class PatientApplication {
 	
 	// 회원정보 출력
 	public void printPatient() {
-		Patient patient = service.patient;
+		Patient patient = service.getPatient();
 		
 		System.out.println(patient.getPatientId() + " 회원 정보 입니다.");
 		
@@ -86,6 +86,14 @@ public class PatientApplication {
 		for (Reservation reservation: reservationList) {
 			reservation.print();
 		}
+	}
+	
+	public void printReservation(long reservationId) {
+		System.out.println("예약 정보입니다.");
+		
+		Reservation reservation = service.getReservation(reservationId);
+		
+		reservation.print();
 	}
 	
 

@@ -1,7 +1,6 @@
 package main.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Patient {
@@ -13,7 +12,7 @@ public class Patient {
     private ArrayList<Reservation> reservationList = new ArrayList<>();
     
 
-    public void read(StringTokenizer dataTokenizer) throws ArrayIndexOutOfBoundsException {
+    public void read(StringTokenizer dataTokenizer) {
     	token = dataTokenizer.nextToken();
     	patientId = dataTokenizer.nextToken();
     	patientName = dataTokenizer.nextToken();
@@ -25,6 +24,23 @@ public class Patient {
     	System.out.printf("[%s] 이름: %s / 번호: %s", patientId, patientName, phoneNumber);
     	System.out.println();
     }
+    
+    public Reservation getReservation(long reservationId) {
+    	for (Reservation reservation: reservationList) {
+			if (reservation.matches(reservationId))
+				return reservation;			
+		}
+    	return null;
+    }
+    
+    public void addReservation(Reservation reservation) {
+    	this.reservationList.add(reservation);
+    }
+    
+    public void clearReservationList() {
+    	this.reservationList.clear();
+    }
+
     
     public String getPatientId() {
     	return patientId;
@@ -44,6 +60,10 @@ public class Patient {
     
     public String getToken() {
     	return this.token;
+    }
+    
+    public void setToken(String token) {
+    	this.token = token;
     }
     
     public ArrayList<Reservation> getReservationList() {
