@@ -11,6 +11,7 @@ public class Hospital {
     
     public void read(StringTokenizer dataTokenizer) {
     	hospitalId = dataTokenizer.nextToken();
+    	System.out.println(hospitalId);
     	hospitalName = dataTokenizer.nextToken();
     	phoneNumber = dataTokenizer.nextToken();
     	address = dataTokenizer.nextToken();
@@ -20,7 +21,9 @@ public class Hospital {
     	String data = dataTokenizer.nextToken();
     	
     	while (boundary.equals(data) == false) {
-    		careTime += dataTokenizer.nextToken();
+    		data = dataTokenizer.nextToken();
+    		careTime += data;
+    		System.out.println(data);
     	}
     }
     

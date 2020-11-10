@@ -8,7 +8,6 @@ public class Patient {
     private String patientName;
     private String phoneNumber;
 	private String token;
-    private Long point;
     private ArrayList<Reservation> reservationList = new ArrayList<>();
     
     public void init(StringTokenizer dataTokenizer) {
@@ -20,7 +19,6 @@ public class Patient {
     	patientId = dataTokenizer.nextToken();
     	patientName = dataTokenizer.nextToken();
     	phoneNumber = dataTokenizer.nextToken();
-    	point = Long.parseLong(dataTokenizer.nextToken());
     }
     
     // Temporary Method -> Drop after GUI linked

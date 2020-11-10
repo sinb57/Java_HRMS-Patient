@@ -17,8 +17,9 @@ public class PatientApplication {
 		service.connect("localhost",  9999);
 
 		// 로그인
-        String userId = scan.next();
-        String userPw = scan.next();
+        String userId = scan.nextLine();
+        String userPw = scan.nextLine();
+
         if (service.login(userId, userPw)) {
         	System.out.println("Login Success");
         }
@@ -62,13 +63,11 @@ public class PatientApplication {
 	
 	public void searchHospital() {
 		
-		System.out.println("병원 검색 기능입니다.");
+		System.out.println("병원 리스트 기능입니다.");
 		
-		System.out.printf("페이지 번호 -> ");
-		int pageNum = scan.nextInt();
+		int pageNum = 1;
 
-		System.out.printf("키워드 -> ");
-		String keyword = scan.nextLine();
+		String keyword = "";
 		
 		ArrayList<Hospital> hospitalList = service.getHospitalList(pageNum, keyword);
 		
@@ -89,6 +88,7 @@ public class PatientApplication {
 	}
 	
 	public void printReservation(long reservationId) {
+		
 		System.out.println("예약 정보입니다.");
 		
 		Reservation reservation = service.getReservation(reservationId);

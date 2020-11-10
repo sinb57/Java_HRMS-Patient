@@ -8,7 +8,7 @@ import main.socket.SocketHandler;
 
 public class PatientService {
 	private Patient patient = new Patient();
-	private ArrayList<Hospital> hospitalList;
+	private ArrayList<Hospital> hospitalList = new ArrayList<>();
 	private SocketHandler socketHandler = new SocketHandler();
 	
 	public boolean connect(String ipAddress, int port) {
@@ -17,7 +17,6 @@ public class PatientService {
 	
 	// Login
 	public boolean login(String userId, String userPw) {
-		
 		StringTokenizer tokenizer = socketHandler.login(userId, userPw);
 		
 		patient.init(tokenizer);

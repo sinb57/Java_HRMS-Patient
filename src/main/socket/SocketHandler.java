@@ -19,10 +19,10 @@ public class SocketHandler {
 	
 	public StringTokenizer login(String userId, String userPw) {
 		
-		String requestData = "POST /auth/Login";
+		String requestData = "POST /auth/login";
 		requestData += "\n" + userId;
 		requestData += "\n" + userPw;
-		
+
 		StringTokenizer responseData = client.request(requestData);
 		
 		String responseHeader = responseData.nextToken();
@@ -66,14 +66,14 @@ public class SocketHandler {
 	
 	public StringTokenizer requestHospitalList(String token, int pageNum, String keyword) {
 		
-		String requestData = "GET /hospitals/" + pageNum;
+		String requestData = "GET /hospitals/list/" + pageNum;
 		requestData += "\n" + token;
 		requestData += "\n" + keyword;
 		
 		StringTokenizer responseData = client.request(requestData);
 		
 		String responseHeader = responseData.nextToken();
-		
+
 		if (responseHeader.equals("Get Hospital List Failed"))
 			return null;
 
@@ -82,7 +82,7 @@ public class SocketHandler {
 	
 	public StringTokenizer requestHospitalInfo(String token, String hospitalId) {
 		
-		String requestData = "GET /hospitals/" + hospitalId;
+		String requestData = "GET /hospitals/info/" + hospitalId;
 		requestData += "\n" + token;
 		
 		StringTokenizer responseData = client.request(requestData);
@@ -114,7 +114,7 @@ public class SocketHandler {
 	}
 	
 	public StringTokenizer requestReservationList(String token) {
-		String requestData = "GET /hospitals/reservations";
+		String requestData = "GET /patients/reservations";
 		requestData += "\n" + token;
 
 		StringTokenizer responseData = client.request(requestData);
