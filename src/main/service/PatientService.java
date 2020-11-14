@@ -19,17 +19,23 @@ public class PatientService {
 	public boolean login(String userId, String userPw) {
 		StringTokenizer tokenizer = socketHandler.login(userId, userPw);
 		
+		if (tokenizer == null)
+			return false;
+		
 		patient.init(tokenizer);
 		
 		return true;
 	}
 	
 	// Return Patient
-	public Patient getPatient() {
+	public Patient getSelfInfo() {
 
-		String token = patient.getToken();
+		String cookie = patient.getCookie();
 		
-		StringTokenizer tokenizer = socketHandler.requestSelfInfo(token);
+		StringTokenizer tokenizer = socketHandler.requestSelfInfo(cookie);
+		
+		if (tokenizer == null)
+			return null;
 		
 		patient.read(tokenizer);
 		
@@ -38,13 +44,13 @@ public class PatientService {
 
 
 	// Modify Self Info
-	public boolean modifyPatientPw(String passwd, String passwd2) {
+	public boolean modifyPatientPw(String passwdFrom, String passwdTo, String passwdRe) {
 
-		if (passwd.equals(passwd2)) {
+		if (passwdTo.equals(passwdRe)) {
 		
-			String token = patient.getToken();
+			String cookie = patient.getCookie();
 			
-			if (socketHandler.modifySelfPw(token, passwd))
+			if (socketHandler.modifySelfPw(cookie, passwdFrom, passwdRe))
 				return true;
 		}
 		
@@ -53,9 +59,9 @@ public class PatientService {
 	
 	// Return Hospital List
 	// Include Search function
-	public ArrayList<Hospital> getHospitalList(int pageNum, String keyword) {
+	public ArrayList<Hospital> getHospitalList(int pageNum, boolean isSelectedOnlyOpend, String keyword) {
 		
-		String token = patient.getToken();
+		String cookie = patient.getCookie();
 
 		if (pageNum < 0)
 			return null;
@@ -65,13 +71,18 @@ public class PatientService {
 		
 		keyword = keyword.trim();
 
-		StringTokenizer tokenizer = socketHandler.requestHospitalList(token, pageNum, keyword);
+		StringTokenizer tokenizer = socketHandler.requestHospitalList(cookie, pageNum, isSelectedOnlyOpend, keyword);
+		
+		if (tokenizer == null)
+			return null;
 		
 		hospitalList.clear();
 		
+		Hospital hospital;
 		while (tokenizer.hasMoreTokens()) {
-			Hospital hospital = new Hospital();
+			hospital = new Hospital();
 			hospital.read(tokenizer);
+			hospitalList.add(hospital);
 		}
 		
 		return hospitalList;
@@ -80,9 +91,12 @@ public class PatientService {
 	// Return Specific Hospital
 	public Hospital getHospital(String hospitalId) {
 		
-		String token = patient.getToken();
+		String cookie = patient.getCookie();
 		
-		StringTokenizer tokenizer = socketHandler.requestHospitalInfo(token, hospitalId);
+		StringTokenizer tokenizer = socketHandler.requestHospitalInfo(cookie, hospitalId);
+		
+		if (tokenizer == null)
+			return null;
 		
 		Hospital hospital = new Hospital();
 
@@ -94,10 +108,13 @@ public class PatientService {
 	// Return Reservation List
     public ArrayList<Reservation> getReservationList() {
     	
-    	String token = patient.getToken();
+		String cookie = patient.getCookie();
     	
-    	StringTokenizer tokenizer = socketHandler.requestReservationList(token);
-    	
+    	StringTokenizer tokenizer = socketHandler.requestReservationList(cookie);
+		
+		if (tokenizer == null)
+			return null;
+		
     	patient.clearReservationList();
     	
 		while (tokenizer.hasMoreTokens()) {
@@ -111,9 +128,12 @@ public class PatientService {
     // Return Reservation Info
 	public Reservation getReservation(long reservationId) {
 
-		String token = patient.getToken();
+		String cookie = patient.getCookie();
 		
-		StringTokenizer tokenizer = socketHandler.requestReservationInfo(token, Long.toString(reservationId));
+		StringTokenizer tokenizer = socketHandler.requestReservationInfo(cookie, Long.toString(reservationId));
+		
+		if (tokenizer == null)
+			return null;
 		
 		Reservation reservation = patient.getReservation(reservationId);
 		

@@ -50,7 +50,7 @@ class Client {
     private StringTokenizer receive() {
         try {
             InputStream in = socket.getInputStream();
-            byte[] buffer = new byte[512];
+            byte[] buffer = new byte[4096];
             int length = in.read(buffer);
             if(length == -1) throw new IOException();
             String responseData = (new String(buffer, 0, length, "UTF-8"));

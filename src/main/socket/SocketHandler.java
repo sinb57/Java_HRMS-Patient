@@ -48,11 +48,12 @@ public class SocketHandler {
 		return responseData;
 	}
 	
-	public boolean modifySelfPw(String token, String passwd) {
+	public boolean modifySelfPw(String token, String passwdFrom, String passwdTo) {
 		
 		String requestData = "PUT /auth/me";
 		requestData += "\n" + token;
-		requestData += "\n" + passwd;
+		requestData += "\n" + passwdFrom;
+		requestData += "\n" + passwdTo;
 		
 		StringTokenizer responseData = client.request(requestData);
 		
@@ -64,10 +65,11 @@ public class SocketHandler {
 		return true;
 	}
 	
-	public StringTokenizer requestHospitalList(String token, int pageNum, String keyword) {
+	public StringTokenizer requestHospitalList(String token, int pageNum, boolean isSelectedOnlyOpend, String keyword) {
 		
 		String requestData = "GET /hospitals/list/" + pageNum;
 		requestData += "\n" + token;
+		requestData += "\n" + isSelectedOnlyOpend;
 		requestData += "\n" + keyword;
 		
 		StringTokenizer responseData = client.request(requestData);
@@ -88,7 +90,7 @@ public class SocketHandler {
 		StringTokenizer responseData = client.request(requestData);
 		
 		String responseHeader = responseData.nextToken();
-		
+
 		if (responseHeader.equals("Get Hospital Info Failed"))
 			return null;
 		

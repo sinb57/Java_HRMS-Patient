@@ -7,23 +7,23 @@ public class Patient {
     private String patientId;
     private String patientName;
     private String phoneNumber;
-	private String token;
+	private String cookie;
     private ArrayList<Reservation> reservationList = new ArrayList<>();
     
     public void init(StringTokenizer dataTokenizer) {
-    	token = dataTokenizer.nextToken();
+    	cookie = dataTokenizer.nextToken().trim();
     	read(dataTokenizer);
     }
 
-    public void read(StringTokenizer dataTokenizer) {
-    	patientId = dataTokenizer.nextToken();
-    	patientName = dataTokenizer.nextToken();
-    	phoneNumber = dataTokenizer.nextToken();
+    public void read(StringTokenizer patientTokenizer) {
+    	patientId = patientTokenizer.nextToken().trim();
+    	patientName = patientTokenizer.nextToken().trim();
+    	phoneNumber = patientTokenizer.nextToken().trim();
     }
     
     // Temporary Method -> Drop after GUI linked
     public void print() {
-    	System.out.printf("[%s] 이름: %s / 번호: %s", patientId, patientName, phoneNumber);
+    	System.out.printf("[%s]\t이름: %s / 번호: %s", patientId, patientName, phoneNumber);
     	System.out.println();
     }
     
@@ -57,8 +57,8 @@ public class Patient {
     	return this.phoneNumber;
     }
     
-    public String getToken() {
-    	return this.token;
+    public String getCookie() {
+    	return this.cookie;
     }
     
     public ArrayList<Reservation> getReservationList() {

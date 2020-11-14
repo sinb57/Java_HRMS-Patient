@@ -16,63 +16,272 @@ public class PatientApplication {
 		
 		service.connect("localhost",  9999);
 
-		// 로그인
-        String userId = scan.nextLine();
-        String userPw = scan.nextLine();
+        login();
+		
+        runMenu();
+        
+        //logout();
+	}
+	
+	public void runMenu() {
 
+		int num = 0;
+		
+		while(true){
+			System.out.println("1 개인정보    2 병원 메뉴    3 예약 메뉴    0 종료");
+			num = scan.nextInt();
+			scan.nextLine();
+
+			switch (num) {
+			case 1:
+				runMenuSelfInfo();
+				break;
+				
+			case 2:
+				runMenuHospital();
+				break;
+				
+			case 3:
+				searchHospital();
+				break;
+				
+			case 0:
+				break;
+				
+			default:
+				System.out.println("잘못입력하였습니다.");
+				break;
+			}
+			if (num == 0) break;
+		}
+	}
+
+	public void runMenuSelfInfo() {
+
+		int num = 0;
+		
+		while(true){
+			System.out.println("개인정보 메뉴입니다!!");
+			System.out.println("1 개인정보 보기    2 비밀번호 변경     0 돌아가기");
+			num = scan.nextInt();
+			scan.nextLine();
+
+			switch (num) {
+			case 1:
+				System.out.println("개인정보 보기");
+				printSelfInfo();
+				break;
+				
+			case 2:
+				System.out.println("비밀번호 변경");
+				modifyPassword();
+				break;
+				
+			case 0:
+				break;
+				
+			default:
+				System.out.println("잘못입력하였습니다.");
+				break;
+			}
+			if (num == 0) break;
+		}
+	}
+	
+
+	public void runMenuHospital() {
+
+		int num = 0;
+		
+		while(true){
+			System.out.println("병원 메뉴입니다!!");
+			System.out.println("1 병원리스트    2 병원 상세 보기    3 병원 조회     0 돌아가기");
+			num = scan.nextInt();
+			scan.nextLine();
+
+			switch (num) {
+			case 1:
+				System.out.println("병원리스트");
+				printHospitalList();
+				break;
+				
+			case 2:
+				System.out.println("병원 상세 보기");
+				printHospitalInfo();
+				break;
+				
+			case 3:
+				System.out.println("병원 조회");
+				searchHospital();
+				break;
+				
+			case 0:
+				break;
+				
+			default:
+				System.out.println("잘못입력하였습니다.");
+				break;
+			}
+			if (num == 0) break;
+		}
+	}
+	
+	public void runMenuReservation() {
+
+		int num = 0;
+		
+		while(true){
+			System.out.println("예약 메뉴입니다!!");
+			System.out.println("1 예약 리스트     0 돌아가기");
+			num = scan.nextInt();
+			scan.nextLine();
+			
+			switch (num) {
+			case 1:
+				System.out.println("예약리스트 보기");
+				System.out.println("준비중입니다.");
+				break;
+				
+			case 0:
+				break;
+				
+			default:
+				System.out.println("잘못입력하였습니다.");
+				break;
+			}
+			if (num == 0) break;
+		}
+	}
+	
+	
+	
+	
+	public void login() {
+		System.out.println("로그인을 진행하겠습니다.");
+		System.out.print("아이디: ");
+        String userId = scan.nextLine();
+		System.out.print("비밀번호: ");
+        String userPw = scan.nextLine();
+        
         if (service.login(userId, userPw)) {
         	System.out.println("Login Success");
         }
         else {
         	System.out.println("Login Fail");
-        	return;
+        	System.exit(-1);
         }
-        
-        // 회원정보 출력
-        printPatient();
-        
-        // 병원찾기
-        searchHospital();
+        System.out.println();
+    	return;
 	}
 	
-	// 회원정보 출력
-	public void printPatient() {
-		Patient patient = service.getPatient();
+	public void printSelfInfo() {
+		Patient patient = service.getSelfInfo();
 		
-		System.out.println(patient.getPatientId() + " 회원 정보 입니다.");
-		
-		patient.print();
+		if (patient == null)
+			System.out.println("정보가 없습니다.");
+		else {
+			System.out.println(patient.getPatientId() + " 회원 정보 입니다.");
+			
+			patient.print();
+		}
+		System.out.println();
 	}
 	
-	
-	public void modifyPatientPw() {
-		String passwd = "";
-		String passwd2 = "";
+	public void modifyPassword() {
+		String passwdFrom = "";
+		String passwdTo = "";
+		String passwdRe = "";
 
-		System.out.println("수정할 내용을 작성해주세요.");
-		
-		System.out.printf("비밀번호 -> ");
-		passwd = scan.next();
+		System.out.printf("현재 비밀번호 -> ");
+		passwdFrom = scan.next();
+
+		System.out.printf("변경할 비밀번호 -> ");
+		passwdTo = scan.next();
 		
 		System.out.printf("비밀번호 재입력  -> ");
-		passwd2 = scan.next();
+		passwdRe = scan.next();
 		
-		service.modifyPatientPw(passwd, passwd2);
+		if (service.modifyPatientPw(passwdFrom, passwdTo, passwdRe))
+			System.out.println("변경 성공");
+		else
+			System.out.println("변경 실패");
+		
+		System.out.println();
 	}
 	
 	
-	public void searchHospital() {
+	public void printHospitalList() {
 		
-		System.out.println("병원 리스트 기능입니다.");
+		System.out.println("병원 리스트를 출력하겠습니다.");
+		
+		System.out.println("영업중인 병원만 출력하기 원하시면 y를 입력해주세요.");
+		
+		boolean isSelectedOnlyOpend = false;
+		if (scan.nextLine().equals("y")) {
+			isSelectedOnlyOpend = true;
+		}
+		
 		
 		int pageNum = 1;
 
-		String keyword = "";
+		while (true) {
+			
+			ArrayList<Hospital> hospitalList = service.getHospitalList(pageNum, isSelectedOnlyOpend, "");
+			
+			if (hospitalList == null) {
+				System.out.println("끝입니다.");
+				break;
+			}
+			
+			for (Hospital hospital: hospitalList)
+				hospital.print();
+			
+			pageNum++;
+		}
 		
-		ArrayList<Hospital> hospitalList = service.getHospitalList(pageNum, keyword);
+		System.out.println();
+	}
+	
+	public void printHospitalInfo() {
+		
+		System.out.println("병원 상세보기입니다.");
+		
+		System.out.println("상세보기를 원하는 병원의 아이디를 입력하세요.");
+		System.out.print(">> ");
+		
+		String hospitalId = scan.nextLine();
+
+		Hospital hospital = service.getHospital(hospitalId);
+		
+		if (hospital == null) {
+			System.out.println("정보가 없습니다.");
+			return;
+		}
+		
+		hospital.printDetail();
+	
+	
+		System.out.println();
+	}
+	
+	public void searchHospital() {
+		
+		System.out.println("병원 조회입니다.");
+		
+		int pageNum = 1;
+
+		System.out.print("키워드를 입력하세요: ");
+		String keyword = scan.nextLine();
+		
+		ArrayList<Hospital> hospitalList = service.getHospitalList(pageNum, false, keyword);
 		
 		for (Hospital hospital: hospitalList)
-			hospital.print();		
+			hospital.printDetail();	
+		
+		if (hospitalList == null)
+			System.out.println("없습니다.");
+		
+		System.out.println();
 	}
 	
 	
@@ -85,6 +294,10 @@ public class PatientApplication {
 		for (Reservation reservation: reservationList) {
 			reservation.print();
 		}
+
+		if (reservationList == null)
+			System.out.println("없습니다.");
+		
 	}
 	
 	public void printReservation(long reservationId) {
@@ -92,6 +305,9 @@ public class PatientApplication {
 		System.out.println("예약 정보입니다.");
 		
 		Reservation reservation = service.getReservation(reservationId);
+		
+		if (reservation == null)
+			System.out.println("없습니다.");
 		
 		reservation.print();
 	}
