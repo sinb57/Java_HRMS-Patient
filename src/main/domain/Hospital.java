@@ -27,7 +27,6 @@ public class Hospital {
         		careTimeList[i] = new CareTime();
 				careTimeList[i].read(hospitalTokenizer);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }
@@ -39,12 +38,13 @@ public class Hospital {
     	
     	switch(state) {
     	case 0:
-    		return "Open";
-    	case 1: // 휴무
-    	case 2: // 영업시간 X
-    		return "Close";
+    		return "영업중";
+    	case 1:
+    		return "휴무";
+    	case 2:
+    		return "영업마감";
     	case 3:
-    		return "Lunch";
+    		return "식사중";
     	default:
     		return "비정상";
     	}

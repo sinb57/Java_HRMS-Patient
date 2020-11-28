@@ -1,56 +1,75 @@
 package main.domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
 
 public class Reservation {
-    private long reservationId;
-    private String hospitalId;
-	private LocalDate reservationDate;
-	private LocalDateTime reservationTime;
-	private int waitingNum;
+	private String reservationState;
+	private String patientId;
+	private String hospitalId;
+	private String reservationDate;
+	private String reservationTime;
+	private String careType;
+	private String[] symptomList;
 	
-    public void init(StringTokenizer dataTokenizer, Patient patient) {
-		
-    	read(dataTokenizer);
+    public void read(StringTokenizer dataTokenizer, Patient patient) {
     	
-    	patient.addReservation(this);
-    }
-    
-    public void read(StringTokenizer dataTokenizer) {
-		
-		reservationId = Long.parseLong(dataTokenizer.nextToken());
+    	reservationState = dataTokenizer.nextToken();
+    	patientId = dataTokenizer.nextToken();
     	hospitalId = dataTokenizer.nextToken();
     	
-    	DateTimeFormatter formatter;
-    	formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	    
-    	reservationDate = LocalDate.parse(dataTokenizer.nextToken(), formatter);
-		formatter = DateTimeFormatter.ofPattern("HH:mm");
-    	reservationTime = LocalDateTime.parse(dataTokenizer.nextToken(), formatter);
+        reservationDate = dataTokenizer.nextToken();
+        reservationTime = dataTokenizer.nextToken();
+
+        careType = dataTokenizer.nextToken();
+        symptomList = dataTokenizer.nextToken().trim().split(" ");
     	
-    	waitingNum = Integer.parseInt(dataTokenizer.nextToken());
+        patient.addReservation(this);
     }
-	
-    public boolean matches(long reservationId) {
-		if (this.reservationId == reservationId)
-			return true;
-		return false;
-	}
 	
 
-    // Temporary Method -> Drop after GUI linked
-    public void print() {
-		System.out.printf("[%s] %s %s ", hospitalId, reservationDate, reservationTime);
-		
-		if (waitingNum != -1)
-			System.out.printf("¼ø¼­:%d", waitingNum);
-		
-    	System.out.println();
-    }
-	
-    public long getReservationID() {
-    	return this.reservationId;
-    }
+	public String getData() {
+    	String data = "";
+    	data += reservationState + " ";
+    	data += patientId + " ";
+    	data += hospitalId + "\n";
+
+    	data += reservationDate + " ";
+    	data += reservationTime + " ";
+
+    	data += careType + "\n";
+    	for (String symptom : symptomList)
+    		data += symptom + " ";
+    	data += "\n\n";
+
+        return data;
+	}
+    
+    
+	public String getReservationState() {
+		return reservationState;
+	}
+
+	public String getPatientId() {
+		return patientId;
+	}
+
+	public String getHospitalId() {
+		return hospitalId;
+	}
+
+	public String getReservationDate() {
+		return reservationDate;
+	}
+
+	public String getReservationTime() {
+		return reservationTime;
+	}
+
+	public String getCareType() {
+		return careType;
+	}
+
+	public String[] getSymptomList() {
+		return symptomList;
+	}
 }

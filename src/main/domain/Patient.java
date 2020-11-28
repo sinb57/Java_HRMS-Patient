@@ -20,20 +20,7 @@ public class Patient {
     	patientName = patientTokenizer.nextToken().trim();
     	phoneNumber = patientTokenizer.nextToken().trim();
     }
-    
-    // Temporary Method -> Drop after GUI linked
-    public void print() {
-    	System.out.printf("[%s]\t이름: %s / 번호: %s", patientId, patientName, phoneNumber);
-    	System.out.println();
-    }
-    
-    public Reservation getReservation(long reservationId) {
-    	for (Reservation reservation: reservationList) {
-			if (reservation.matches(reservationId))
-				return reservation;			
-		}
-    	return null;
-    }
+
     
     public void addReservation(Reservation reservation) {
     	this.reservationList.add(reservation);
@@ -43,7 +30,6 @@ public class Patient {
     	this.reservationList.clear();
     }
 
-    
 
     public String getPatientId() {
     	return patientId;

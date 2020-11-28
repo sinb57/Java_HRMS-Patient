@@ -8,7 +8,6 @@ import main.socket.SocketHandler;
 
 public class PatientService {
 	private Patient patient = new Patient();
-	private ArrayList<Hospital> hospitalList = new ArrayList<>();
 	private SocketHandler socketHandler = new SocketHandler();
 	
 	public boolean connect(String ipAddress, int port) {
@@ -27,7 +26,15 @@ public class PatientService {
 		return true;
 	}
 	
-	// Return Patient
+	// Join
+	public boolean join(String userId, String userPw, String userPw2, String userName, String phoneNumber) {
+		if (userPw.equals(userPw2)) {
+			return socketHandler.join(userId, userPw, userName, phoneNumber);
+		}
+		return false;
+	}
+	
+	// Get Self Info
 	public Patient getSelfInfo() {
 
 		String cookie = patient.getCookie();
@@ -43,7 +50,7 @@ public class PatientService {
 	}
 
 
-	// Modify Self Info
+	// Modify Password
 	public boolean modifyPatientPw(String passwdFrom, String passwdTo, String passwdRe) {
 
 		if (passwdTo.equals(passwdRe)) {
@@ -59,26 +66,24 @@ public class PatientService {
 	
 	// Return Hospital List
 	// Include Search function
-	public ArrayList<Hospital> getHospitalList(int pageNum, boolean isSelectedOnlyOpend, String keyword) {
+	public ArrayList<Hospital> getHospitalList(int pageNum, String address, String careType, String state, String keywords) {
 		
 		String cookie = patient.getCookie();
 
 		if (pageNum < 0)
-			return null;
+			pageNum = 1;
 		
-		if (keyword == null)
-			keyword = "";
+		if (keywords == null)
+			keywords = "";
 		
-		keyword = keyword.trim();
-
-		StringTokenizer tokenizer = socketHandler.requestHospitalList(cookie, pageNum, isSelectedOnlyOpend, keyword);
+		StringTokenizer tokenizer = socketHandler.requestHospitalList(cookie, pageNum, address, careType, state, keywords);
 		
 		if (tokenizer == null)
 			return null;
 		
-		hospitalList.clear();
-		
+		ArrayList<Hospital> hospitalList = new ArrayList<>();
 		Hospital hospital;
+
 		while (tokenizer.hasMoreTokens()) {
 			hospital = new Hospital();
 			hospital.read(tokenizer);
@@ -106,11 +111,14 @@ public class PatientService {
 	}
 	
 	// Return Reservation List
-    public ArrayList<Reservation> getReservationList() {
+    public ArrayList<Reservation> getReservationList(int pageNum) {
     	
 		String cookie = patient.getCookie();
-    	
-    	StringTokenizer tokenizer = socketHandler.requestReservationList(cookie);
+		
+		if (pageNum < 0)
+			pageNum = 1;
+		
+    	StringTokenizer tokenizer = socketHandler.requestReservationList(cookie, pageNum);
 		
 		if (tokenizer == null)
 			return null;
@@ -119,28 +127,45 @@ public class PatientService {
     	
 		while (tokenizer.hasMoreTokens()) {
 			Reservation reservation = new Reservation();
-			reservation.init(tokenizer, patient);
+			reservation.read(tokenizer, patient);
 		}
 		
 		return (patient.getReservationList());
     }
     
     // Return Reservation Info
-	public Reservation getReservation(long reservationId) {
+	public Reservation getReservation(String hospitalId, String reservationDate, String reservationTime) {
 
 		String cookie = patient.getCookie();
 		
-		StringTokenizer tokenizer = socketHandler.requestReservationInfo(cookie, Long.toString(reservationId));
+		StringTokenizer tokenizer = socketHandler.requestReservationInfo(cookie, hospitalId, reservationDate, reservationTime);
 		
 		if (tokenizer == null)
 			return null;
 		
-		Reservation reservation = patient.getReservation(reservationId);
-		
-		reservation.read(tokenizer);
+		Reservation reservation = new Reservation();
+		reservation.read(tokenizer, patient);
 		
 		return reservation;
 	}
 	
+	// Make Reservation
+	public boolean makeReservation(String hospitalId, String reservationDate, String reservationTime, String careType, String[] symptomList) {
+		
+		String cookie = patient.getCookie();
+		
+		if (socketHandler.makeReservation(cookie, hospitalId, reservationDate, reservationTime, careType, symptomList))
+			return true;
+		return false;
+	}
+	
+	// Cancel Reservation
+	public boolean cancelReservation(String hospitalId, String reservationDate, String reservationTime) {
+		String cookie = patient.getCookie();
+		
+		if (socketHandler.cancelReservation(cookie, hospitalId, reservationDate, reservationTime))
+			return true;
+		return false;
+	}
  
 }
