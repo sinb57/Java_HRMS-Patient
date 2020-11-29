@@ -1,19 +1,16 @@
 package main;
 
-import main.service.PatientService;
+import main.gui.PageHandler;
 
 public class PatientApplication {
-	private PatientService service = new PatientService();
 
-	
 	public void run() {
-		service.connect("localhost",  9999);
-
+		PageHandler pageHandler = new PageHandler();
+		pageHandler.start();
 	}
-
-
-    public static void main(String args[]){
-    	PatientApplication app = new PatientApplication();
-    	app.run();
-    }
+	
+	public static void main(String[] args) {
+		PatientApplication application = new PatientApplication();
+		application.run();
+	}
 }
