@@ -8,7 +8,6 @@ public class Patient {
     private String patientName;
     private String phoneNumber;
 	private String cookie;
-    private ArrayList<Reservation> reservationList = new ArrayList<>();
     
     public void init(StringTokenizer dataTokenizer) {
     	cookie = dataTokenizer.nextToken().trim();
@@ -20,16 +19,6 @@ public class Patient {
     	patientName = patientTokenizer.nextToken().trim();
     	phoneNumber = patientTokenizer.nextToken().trim();
     }
-
-    
-    public void addReservation(Reservation reservation) {
-    	this.reservationList.add(reservation);
-    }
-    
-    public void clearReservationList() {
-    	this.reservationList.clear();
-    }
-
 
     public String getPatientId() {
     	return patientId;
@@ -45,10 +34,6 @@ public class Patient {
     
     public String getCookie() {
     	return this.cookie;
-    }
-    
-    public ArrayList<Reservation> getReservationList() {
-    	return this.reservationList;
     }
 
 }

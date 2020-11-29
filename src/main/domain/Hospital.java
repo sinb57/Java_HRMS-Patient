@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 
@@ -12,7 +13,7 @@ public class Hospital {
     private String hospitalName;
     private String phoneNumber;
     private String address;
-    private String[] careTypeList;
+    private HashMap<String, String[]> careTypeMap = new HashMap<>();
     private CareTime[] careTimeList = new CareTime[7];
     
     public void read(StringTokenizer hospitalTokenizer) {
@@ -20,8 +21,14 @@ public class Hospital {
     	hospitalName = hospitalTokenizer.nextToken().trim();
     	phoneNumber = hospitalTokenizer.nextToken().trim();
     	address = hospitalTokenizer.nextToken().trim();
-        careTypeList = hospitalTokenizer.nextToken().trim().split(" ");
-
+    	
+        String[] careTypeList = hospitalTokenizer.nextToken().trim().split(" ");
+        
+        for (String careType: careTypeList) {
+        	String[] docterList =  hospitalTokenizer.nextToken().trim().split(" ");
+        	careTypeMap.put(careType, docterList);
+        }
+        
         for (int i=0; i<7; i++) {
         	try {
         		careTimeList[i] = new CareTime();
@@ -74,43 +81,7 @@ public class Hospital {
     	
     	return -1;
     }
-    
-    // Temporary Method -> Drop after GUI linked
-    public void print() {
-    	System.out.printf("[%s]\t이름: %s [%s]", hospitalId, hospitalName, getStateNow());
-    	System.out.println();
-    	
-    	System.out.printf("진료과목: ");
-    	for (String careType: careTypeList)
-    		System.out.print(careType + " ");
-    	System.out.println();
-    	
-    	System.out.println();
-    }
 
-    // Temporary Method -> Drop after GUI linked
-    public void printDetail() {
-    	String padding = "           ";
-    	System.out.printf("[%s]\t이름: %s / phone: %s", hospitalId, hospitalName, phoneNumber);
-    	System.out.println();
-
-    	System.out.printf(padding + "주소: %s", address);
-    	System.out.println();
-
-    	System.out.printf(padding + "진료과목 ");
-    	for (String careType: careTypeList)
-    		System.out.print(careType + " ");
-    	System.out.println();
-
-    	System.out.println(padding + "진료시간");
-    	for (CareTime careTime: careTimeList) {
-    		System.out.print(padding);
-    		careTime.print();
-    	}
-    	System.out.println();
-
-    }
-    
     public String getHospitalId() {
     	return this.hospitalId;
     }
@@ -162,7 +133,6 @@ public class Hospital {
         	
         	startLunchTime = LocalTime.parse(dataTokenizer.nextToken(), formatter);
         	endLunchTime = LocalTime.parse(dataTokenizer.nextToken(), formatter);
-        	
     	}
     	
     	boolean equalsDate(String dayOfWeek) {
@@ -220,8 +190,6 @@ public class Hospital {
     		else {
     			data += "진료안함";
     		}
-    		
-    		System.out.println(data);
     	}
     }
 

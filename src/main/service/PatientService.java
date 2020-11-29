@@ -22,7 +22,6 @@ public class PatientService {
 			return false;
 		
 		patient.init(tokenizer);
-		
 		return true;
 	}
 	
@@ -36,35 +35,28 @@ public class PatientService {
 	
 	// Get Self Info
 	public Patient getSelfInfo() {
-
 		String cookie = patient.getCookie();
-		
 		StringTokenizer tokenizer = socketHandler.requestSelfInfo(cookie);
 		
 		if (tokenizer == null)
 			return null;
 		
 		patient.read(tokenizer);
-		
 		return patient;
 	}
 
 
 	// Modify Password
 	public boolean modifyPatientPw(String passwdFrom, String passwdTo, String passwdRe) {
-
 		if (passwdTo.equals(passwdRe)) {
-		
 			String cookie = patient.getCookie();
-			
-			if (socketHandler.modifySelfPw(cookie, passwdFrom, passwdRe))
+			if (socketHandler.modifySelfPw(cookie, passwdFrom, passwdTo))
 				return true;
 		}
-		
 		return false;
 	}
 	
-	// Return Hospital List
+	// Get Hospital List
 	// Include Search function
 	public ArrayList<Hospital> getHospitalList(int pageNum, String address, String careType, String state, String keywords) {
 		
@@ -110,7 +102,7 @@ public class PatientService {
 		return hospital;
 	}
 	
-	// Return Reservation List
+	// Get Reservation List
     public ArrayList<Reservation> getReservationList(int pageNum) {
     	
 		String cookie = patient.getCookie();
@@ -123,17 +115,18 @@ public class PatientService {
 		if (tokenizer == null)
 			return null;
 		
-    	patient.clearReservationList();
+		ArrayList<Reservation> reservationList = new ArrayList<>();
     	
 		while (tokenizer.hasMoreTokens()) {
 			Reservation reservation = new Reservation();
-			reservation.read(tokenizer, patient);
+			reservation.read(tokenizer);
+			reservationList.add(reservation);
 		}
 		
-		return (patient.getReservationList());
+		return reservationList;
     }
     
-    // Return Reservation Info
+    // Get Reservation Info
 	public Reservation getReservation(String hospitalId, String reservationDate, String reservationTime) {
 
 		String cookie = patient.getCookie();
@@ -144,7 +137,7 @@ public class PatientService {
 			return null;
 		
 		Reservation reservation = new Reservation();
-		reservation.read(tokenizer, patient);
+		reservation.read(tokenizer);
 		
 		return reservation;
 	}

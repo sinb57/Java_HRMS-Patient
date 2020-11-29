@@ -8,22 +8,27 @@ public class Reservation {
 	private String hospitalId;
 	private String reservationDate;
 	private String reservationTime;
+	private String careTime;
+	private String docterName;
 	private String careType;
 	private String[] symptomList;
 	
-    public void read(StringTokenizer dataTokenizer, Patient patient) {
+    public void read(StringTokenizer dataTokenizer) {
     	
-    	reservationState = dataTokenizer.nextToken();
-    	patientId = dataTokenizer.nextToken();
-    	hospitalId = dataTokenizer.nextToken();
+    	reservationState = dataTokenizer.nextToken().trim();
+    	patientId = dataTokenizer.nextToken().trim();
+    	hospitalId = dataTokenizer.nextToken().trim();
     	
-        reservationDate = dataTokenizer.nextToken();
-        reservationTime = dataTokenizer.nextToken();
+        reservationDate = dataTokenizer.nextToken().trim();
+        reservationTime = dataTokenizer.nextToken().trim();
 
-        careType = dataTokenizer.nextToken();
+        careType = dataTokenizer.nextToken().trim();
         symptomList = dataTokenizer.nextToken().trim().split(" ");
-    	
-        patient.addReservation(this);
+        
+    	if (reservationState.equals("진료완료")) {
+	        careTime = dataTokenizer.nextToken().trim();
+            docterName = dataTokenizer.nextToken().trim();
+    	}
     }
 	
 
