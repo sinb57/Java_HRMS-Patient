@@ -25,11 +25,35 @@ public class PatientService {
 		return true;
 	}
 	
+	// Logout
+	public boolean logout() {
+		String cookie = patient.getCookie();
+		
+		if (socketHandler.logout(cookie)) {
+			patient.clear();
+			return true;
+		}
+		
+		return false;
+	}
+	
 	// Join
 	public boolean join(String userId, String userPw, String userPw2, String userName, String phoneNumber) {
 		if (userPw.equals(userPw2)) {
 			return socketHandler.join(userId, userPw, userName, phoneNumber);
 		}
+		return false;
+	}
+	
+	// Leave
+	public boolean leave() {
+		String cookie = patient.getCookie();
+		
+		if (socketHandler.leave(cookie)) {
+			patient.clear();
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -126,6 +150,21 @@ public class PatientService {
 		return reservationList;
     }
     
+    public Reservation getRecentReservation(String hospitalId) {
+    	
+		String cookie = patient.getCookie();
+		
+    	StringTokenizer tokenizer = socketHandler.requestRecentReservation(cookie, hospitalId);
+		
+		if (tokenizer == null)
+			return null;
+		
+		Reservation reservation = new Reservation();
+		reservation.read(tokenizer);
+    	
+		return reservation;
+    }
+    
     // Get Reservation Info
 	public Reservation getReservation(String hospitalId, String reservationDate, String reservationTime) {
 
@@ -143,7 +182,7 @@ public class PatientService {
 	}
 	
 	// Make Reservation
-	public boolean makeReservation(String hospitalId, String reservationDate, String reservationTime, String careType, String[] symptomList) {
+	public boolean makeReservation(String hospitalId, String reservationDate, String reservationTime, String careType, ArrayList<String> symptomList) {
 		
 		String cookie = patient.getCookie();
 		
@@ -159,6 +198,11 @@ public class PatientService {
 		if (socketHandler.cancelReservation(cookie, hospitalId, reservationDate, reservationTime))
 			return true;
 		return false;
+	}
+	
+	
+	public Patient getPatient() {
+		return patient;
 	}
  
 }

@@ -1,6 +1,6 @@
 package main;
 
-import main.gui.PageHandler;
+import main.page.PageHandler;
 
 public class PatientApplication {
 

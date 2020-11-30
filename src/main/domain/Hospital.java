@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 
@@ -38,6 +40,10 @@ public class Hospital {
 			}
         }
         
+        
+    }
+    public Set<String> getCareTypeList() {
+    	return careTypeMap.keySet();
     }
     
     public String getStateNow() {
@@ -82,6 +88,15 @@ public class Hospital {
     	return -1;
     }
 
+    public ArrayList<String> getCareTimeList() {
+    	ArrayList<String> careTimeStringList = new ArrayList<>();
+    	
+    	for (CareTime careTime: careTimeList) {
+    		careTimeStringList.add(careTime.toString());
+    	}
+    	return careTimeStringList;
+    }
+    
     public String getHospitalId() {
     	return this.hospitalId;
     }
@@ -107,6 +122,20 @@ public class Hospital {
     	private LocalTime endLunchTime;
     	private boolean hasCareTime;
     	private boolean hasLunchTime;
+    	
+    	public String toString() {
+    		String dataFormat = "%s : %s~%s (식사시간 %s~%s)";
+    		String data = "";
+    		
+    		if (!hasCareTime)
+    			return String.format("%s : 진료안함", dayOfWeek);
+    		
+    		if (!hasLunchTime)
+    			return String.format("%s : %s~%s", dayOfWeek, startCareTime, endCareTime);
+    			
+    		return String.format("%s : %s~%s (식사시간 %s~%s)", 
+    				dayOfWeek, startCareTime, endCareTime, startLunchTime, endLunchTime);
+    	}
     	
     	void read(StringTokenizer careTimeTokenizer) throws IOException {
             StringTokenizer dataTokenizer = new StringTokenizer(careTimeTokenizer.nextToken()," ");
@@ -168,29 +197,7 @@ public class Hospital {
     		}
     		return false;
     	}
-    	
-    	void print() {
-    		String data = dayOfWeek + " ";
 
-			data += "진료시간: ";
-    		if (hasCareTime) {
-	    		data += startCareTime.toString();
-	    		data += "~";
-	    		data += endCareTime.toString();
-	    		data += "  ";
-	    	
-	    		if (hasLunchTime) {
-	    			data += "점심시간: ";
-		    		data += startLunchTime.toString();
-		    		data += "~";
-		    		data += endLunchTime.toString();
-	    		}
-
-    		}
-    		else {
-    			data += "진료안함";
-    		}
-    	}
     }
 
 }

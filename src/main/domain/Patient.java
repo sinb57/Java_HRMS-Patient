@@ -36,4 +36,10 @@ public class Patient {
     	return this.cookie;
     }
 
+    public void clear() {
+    	patientId = null;
+    	patientName = null;
+    	phoneNumber = null;
+    	cookie = null;
+    }
 }

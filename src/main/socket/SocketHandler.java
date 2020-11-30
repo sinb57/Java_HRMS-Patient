@@ -1,5 +1,6 @@
 package main.socket;
 
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class SocketHandler {
@@ -33,6 +34,20 @@ public class SocketHandler {
 		return responseData;
 	}
 	
+	public boolean logout(String cookie) {
+		String requestData = "GET /auth/logout";
+		requestData += "\n" + cookie;
+		
+		StringTokenizer responseData = client.request(requestData);
+		
+		String responseHeader = responseData.nextToken();
+		
+		if (responseHeader.equals("Logout Failed"))
+			return false;
+
+		return true;
+	}
+	
 	public boolean join(String userId, String userPw, String userName, String phoneNumber) {
 		String requestData = "POST /auth/join";
 		requestData += "\n" + userId;
@@ -45,6 +60,20 @@ public class SocketHandler {
 		String responseHeader = responseData.nextToken();
 		
 		if (responseHeader.equals("Join Failed"))
+			return false;
+
+		return true;
+	}
+	
+	public boolean leave(String cookie) {
+		String requestData = "GET /auth/leave";
+		requestData += "\n" + cookie;
+		
+		StringTokenizer responseData = client.request(requestData);
+		
+		String responseHeader = responseData.nextToken();
+		
+		if (responseHeader.equals("Leave Failed"))
 			return false;
 
 		return true;
@@ -117,7 +146,7 @@ public class SocketHandler {
 	}
 	
 	
-	public boolean makeReservation(String cookie, String hospitalId, String reservationDate, String reservationTime, String careType, String[] symptomList) {
+	public boolean makeReservation(String cookie, String hospitalId, String reservationDate, String reservationTime, String careType, ArrayList<String> symptomList) {
 		
 		String requestData = "POST /patients/reservations/" + hospitalId;
 		requestData += "\n" + cookie;
@@ -164,6 +193,21 @@ public class SocketHandler {
 		String responseHeader = responseData.nextToken();
 		
 		if (responseHeader.equals("Get Reservation List Failed"))
+			return null;
+		
+		return responseData;
+	}
+	
+	public StringTokenizer requestRecentReservation(String cookie, String hospitalId) {
+		String requestData = "GET /patients/reservations/recent/" + hospitalId;
+		requestData += "\n" + cookie;
+
+		System.out.println(requestData);
+		StringTokenizer responseData = client.request(requestData);
+
+		String responseHeader = responseData.nextToken();
+		
+		if (responseHeader.equals("Get Recent Reservation Info Failed"))
 			return null;
 		
 		return responseData;

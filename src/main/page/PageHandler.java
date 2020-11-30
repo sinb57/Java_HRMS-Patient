@@ -1,4 +1,4 @@
-package main.gui;
+package main.page;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,24 +9,27 @@ import main.service.PatientService;
 
 public class PageHandler extends JFrame {
 	PatientService service = new PatientService();
-	final String path = "./image/";
+	
 	final Color backgroundColor = new Color(0, 176, 240);
-	private Header header = null;
-	private Footer footer = null;
+	final String path = "./image/";
+	String location = "경기도 수원시 장안구";
+	String hospitalId = "hrms_001";
+	String reservationDate = "2020-11-28";
+	String reservationTime = "14:00";
 
 	public PageHandler() {
+		service.connect("localhost",  9999);
+		service.login("arinlove", "dkfls123");
+		
 		this.setTitle("거긴 어때");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBackground(Color.white);
-		this.setSize(500, 800);
+		this.setSize(500, 960);
 		this.setVisible(true);
-		
-		header = new Header(this);
-		footer = new Footer(this);
 	}
 	
 	public void start() {
-		change("HospitalListPage");
+		change("ModifyPasswordPage");
 	}
 	
 	void change(String panelName) {
@@ -47,26 +50,36 @@ public class PageHandler extends JFrame {
 			page = new HospitalListPage(this);
 			title = "병원리스트";
 			break;
-			/*
-		case "HospitalIn
-		foPage":
-			page = new HospitalInfoPage();
+		case "HospitalInfoPage":
+			page = new HospitalInfoPage(this, hospitalId);
+			title = "병원정보";
+			break;
+		case "ProcessReservationPage":
+			page = new ProcessReservationPage(this, hospitalId);
+			title = "예약접수";
 			break;
 		case "ReservationListPage":
-			page = new ReservationListPage();
+			page = new ReservationListPage(this);
+			title = "예약리스트";
 			break;
 		case "ReservationInfoPage":
-			page = new ReservationInfoPage();
+			page = new ReservationInfoPage(this, hospitalId, reservationDate, reservationTime);
+			title = "예약정보";
 			break;
 		case "SelfInfoPage":
-			page = new SelfInfoPage();
+			page = new SelfInfoPage(this);
+			title = "개인정보";
 			break;
-			*/
+		case "ModifyPasswordPage":
+			page = new ModifyPasswordPage(this);
+			title = "비밀번호 변경";
+			break;
 		}
 		
 		getContentPane().removeAll();
-		
-		header.setTitle(title);
+
+		Header header = new Header(this, title);
+		Footer footer = new Footer(this);
 		page.setBackground(new Color(0, 176, 240));
 		
 		getContentPane().add(header, BorderLayout.PAGE_START);
@@ -76,7 +89,5 @@ public class PageHandler extends JFrame {
 		repaint();
 	}
 	
-	void reload() {
-		
-	}
+	
 }

@@ -1,4 +1,4 @@
-package main.gui;
+package main.page;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -83,10 +83,9 @@ public class LoginPage extends JPanel {
 				String userId = idTextField.getText();
 				String userPw = String.valueOf(passwdTextField.getPassword());
 				if (pageHandler.service.login(userId, userPw)) {
-					JOptionPane.showMessageDialog(null, "You have logged in successfully");
 					pageHandler.change("HospitalListPage");
 				} else {
-					JOptionPane.showMessageDialog(null, "You failed to log in");
+					JOptionPane.showMessageDialog(null, "로그인에 실패하셨습니다");
 				}
 			}
 		});

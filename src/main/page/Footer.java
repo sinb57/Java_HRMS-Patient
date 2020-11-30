@@ -1,10 +1,12 @@
-package main.gui;
+package main.page;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import main.domain.Patient;
 
 public class Footer extends JPanel {
 
@@ -16,7 +18,9 @@ public class Footer extends JPanel {
 		hospitalLowerButton.setIcon(new ImageIcon(pageHandler.path + "loginHospitalButton.png"));
 		hospitalLowerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pageHandler.change("HospitalListPage");
+				Patient patient = pageHandler.service.getPatient();
+				if (patient.getCookie() != null)
+					pageHandler.change("HospitalListPage");
 			}
 		});
 
@@ -24,7 +28,9 @@ public class Footer extends JPanel {
 		reservationLowerButton.setIcon(new ImageIcon(pageHandler.path + "loginReservationButton.png"));
 		reservationLowerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pageHandler.change("ReservationListPage");
+				Patient patient = pageHandler.service.getPatient();
+				if (patient.getCookie() != null)
+					pageHandler.change("ReservationListPage");
 			}
 		});
 
@@ -32,9 +38,12 @@ public class Footer extends JPanel {
 		informationLowerButton.setIcon(new ImageIcon(pageHandler.path + "loginInformationButton.png"));
 		informationLowerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pageHandler.change("SelfInfoPage");
+				Patient patient = pageHandler.service.getPatient();
+				if (patient.getCookie() != null)
+					pageHandler.change("SelfInfoPage");
 			}
 		});
+		
 		
 		this.add(hospitalLowerButton);
 		this.add(reservationLowerButton);
