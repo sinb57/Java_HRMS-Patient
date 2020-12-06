@@ -9,35 +9,34 @@ import main.service.PatientService;
 
 public class PageHandler extends JFrame {
 	PatientService service = new PatientService();
-	
+
 	final Color backgroundColor = new Color(0, 176, 240);
 	final String path = "./image/";
-	String location = "경기도 수원시 장안구";
-	String hospitalId = "hrms_001";
-	String reservationDate = "2020-11-28";
-	String reservationTime = "14:00";
+	String location = "경기도 수원시 영통구";
+	String hospitalId = "";
+	String reservationDate = "";
+	String reservationTime = "";
 
 	public PageHandler() {
-		service.connect("localhost",  9999);
-		service.login("arinlove", "dkfls123");
-		
+		service.connect("localhost", 9999);
+
 		this.setTitle("거긴 어때");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBackground(Color.white);
 		this.setSize(500, 960);
 		this.setVisible(true);
 	}
-	
+
 	public void start() {
-		change("ModifyPasswordPage");
+		change("LoginPage");
 	}
-	
+
 	void change(String panelName) {
-		
+
 		JPanel page = null;
 		String title = "";
-		
-		switch(panelName) {
+
+		switch (panelName) {
 		case "LoginPage":
 			page = new LoginPage(this);
 			title = "로그인";
@@ -75,19 +74,18 @@ public class PageHandler extends JFrame {
 			title = "비밀번호 변경";
 			break;
 		}
-		
+
 		getContentPane().removeAll();
 
 		Header header = new Header(this, title);
 		Footer footer = new Footer(this);
 		page.setBackground(new Color(0, 176, 240));
-		
+
 		getContentPane().add(header, BorderLayout.PAGE_START);
 		getContentPane().add(page);
 		getContentPane().add(footer, BorderLayout.PAGE_END);
 		revalidate();
 		repaint();
 	}
-	
-	
+
 }

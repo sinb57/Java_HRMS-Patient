@@ -11,7 +11,7 @@ import main.domain.Patient;
 public class Footer extends JPanel {
 
 	Footer(PageHandler pageHandler) {
-		GridLayout gridLayout = new GridLayout(1,3);
+		GridLayout gridLayout = new GridLayout(1, 3);
 		this.setLayout(gridLayout);
 
 		JButton hospitalLowerButton = new JButton("new Button");
@@ -43,8 +43,7 @@ public class Footer extends JPanel {
 					pageHandler.change("SelfInfoPage");
 			}
 		});
-		
-		
+
 		this.add(hospitalLowerButton);
 		this.add(reservationLowerButton);
 		this.add(informationLowerButton);

@@ -20,7 +20,7 @@ public class ReservationInfoPage extends JPanel {
 	private String hospitalId;
 	private String reservationDate;
 	private String reservationTime;
-	
+
 	ReservationInfoPage(PageHandler pageHandler, String hospitalId, String reservationDate, String reservationTime) {
 		this.pageHandler = pageHandler;
 		this.hospitalId = hospitalId;
@@ -29,7 +29,7 @@ public class ReservationInfoPage extends JPanel {
 		this.setLayout(null);
 		build();
 	}
-	
+
 	void build() {
 
 		Reservation reservation = pageHandler.service.getReservation(hospitalId, reservationDate, reservationTime);
@@ -44,8 +44,8 @@ public class ReservationInfoPage extends JPanel {
 		reservationDateTimeLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 23));
 		reservationDateTimeLabel.setBounds(20, 20, 300, 40);
 		this.add(reservationDateTimeLabel);
-		
-		JLabel reservationCareTypeLabel = new JLabel("("+reservation.getCareType()+")");
+
+		JLabel reservationCareTypeLabel = new JLabel("(" + reservation.getCareType() + ")");
 		reservationCareTypeLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 22));
 		reservationCareTypeLabel.setBounds(220, 20, 300, 40);
 		this.add(reservationCareTypeLabel);
@@ -62,7 +62,7 @@ public class ReservationInfoPage extends JPanel {
 			}
 		});
 		this.add(reservationButton);
-		
+
 		JButton cancelButton = new JButton("øπæ‡√Îº“");
 		cancelButton.setVisible(false);
 		cancelButton.setEnabled(false);
@@ -71,35 +71,32 @@ public class ReservationInfoPage extends JPanel {
 		cancelButton.setBackground(Color.GREEN);
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (pageHandler.service.cancelReservation(hospitalId, reservationDate, reservationTime))
-				{}
+				if (pageHandler.service.cancelReservation(hospitalId, reservationDate, reservationTime)) {
+				}
 				pageHandler.change("ReservationInfoPage");
 			}
 		});
 		this.add(cancelButton);
-		
+
 		if (reservation.getReservationState().equals("øπæ‡¡ﬂ")) {
 			cancelButton.setVisible(true);
 			cancelButton.setEnabled(true);
-		}
-		else {
+		} else {
 			reservationButton.setVisible(true);
 			reservationButton.setEnabled(true);
 		}
-		
-		
+
 		JPanel bodyPanel = new JPanel();
 		bodyPanel.setLayout(null);
 		bodyPanel.setBackground(Color.WHITE);
-		bodyPanel.setBounds(10,90,460,550);
-		
-		
+		bodyPanel.setBounds(10, 90, 460, 550);
+
 		JPanel symptomPanel = new JPanel();
 		symptomPanel.setBounds(20, 70, 450, 35);
 		symptomPanel.setBackground(Color.WHITE);
 		symptomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
-		for (String symptom: reservation.getSymptomList()) {
+
+		for (String symptom : reservation.getSymptomList()) {
 			JLabel hospitalSubjectLabel = new JLabel(symptom);
 			hospitalSubjectLabel.setOpaque(true);
 			hospitalSubjectLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 14));
@@ -113,36 +110,34 @@ public class ReservationInfoPage extends JPanel {
 		hospitalNameLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 23));
 		hospitalNameLabel.setBounds(20, 20, 300, 40);
 		bodyPanel.add(hospitalNameLabel);
-		
 
-		
 		JPanel hospitalInfoPanel = new JPanel();
 		hospitalInfoPanel.setBounds(20, 115, 420, 424);
 		hospitalInfoPanel.setBorder(new LineBorder(Color.gray, 2));
 		hospitalInfoPanel.setOpaque(true);
 		hospitalInfoPanel.setBackground(Color.WHITE);
 		hospitalInfoPanel.setLayout(null);
-		
+
 		JLabel phoneNumberLabel = new JLabel("ø¨∂Ù√≥ : ");
 		phoneNumberLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 20));
 		phoneNumberLabel.setBounds(20, 10, 100, 40);
 		hospitalInfoPanel.add(phoneNumberLabel);
-		
+
 		JLabel phoneNumberInputLabel = new JLabel(hospital.getPhoneNumber());
 		phoneNumberInputLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 16));
 		phoneNumberInputLabel.setBounds(100, 10, 195, 40);
 		hospitalInfoPanel.add(phoneNumberInputLabel);
-		
+
 		JLabel addressLabel = new JLabel("¡÷º“");
 		addressLabel.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 20));
 		addressLabel.setBounds(20, 50, 100, 40);
 		hospitalInfoPanel.add(addressLabel);
-		
+
 		JLabel addressInfo = new JLabel(hospital.getAddress());
 		addressInfo.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 14));
 		addressInfo.setBounds(30, 80, 400, 40);
 		hospitalInfoPanel.add(addressInfo);
-		
+
 		JLabel time = new JLabel("¡¯∑· Ω√∞£");
 		time.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 20));
 		time.setBounds(20, 120, 131, 40);
@@ -151,21 +146,20 @@ public class ReservationInfoPage extends JPanel {
 		JPanel timeTablePanel = new JPanel();
 		timeTablePanel.setLayout(null);
 		timeTablePanel.setBounds(20, 160, 380, 230);
-		
+
 		ArrayList<String> careTimeList = hospital.getCareTimeList();
-		
-		for (int i=0; i<careTimeList.size(); i++) {
+
+		for (int i = 0; i < careTimeList.size(); i++) {
 			JLabel timeInfo = new JLabel(careTimeList.get(i));
 			timeInfo.setFont(new Font("∏º¿∫ ∞ÌµÒ", Font.BOLD, 16));
-			timeInfo.setBounds(10, 10+ 30*i, 430, 25);
+			timeInfo.setBounds(10, 10 + 30 * i, 430, 25);
 			timeTablePanel.add(timeInfo);
 		}
-		
+
 		hospitalInfoPanel.add(timeTablePanel);
-		
+
 		bodyPanel.add(hospitalInfoPanel);
-	
-		
+
 		this.add(bodyPanel);
 	}
 }

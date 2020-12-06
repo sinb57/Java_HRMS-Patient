@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class Header extends JPanel {
 	private String title = "";
-	
+
 	Header(PageHandler pageHandler, String title) {
 		this.title = title;
 		this.setLayout(null);
@@ -14,8 +14,9 @@ public class Header extends JPanel {
 		this.setPreferredSize(new Dimension(0, 100));
 		build();
 	}
+
 	void build() {
-		
+
 		JLabel logoLabel = new JLabel("°Å±ä ¾î¶§");
 		logoLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
 		logoLabel.setBounds(15, 0, 100, 50);
@@ -28,10 +29,10 @@ public class Header extends JPanel {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 33));
 		titlePanel.add(titleLabel);
-		
+
 		this.add(logoLabel);
 		this.add(titlePanel);
 
 	}
-	
+
 }
