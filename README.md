@@ -1,75 +1,126 @@
-# :hospital: 병원 예약 관리 시스템, 거긴 어때
+# :hospital: 병원 예약 관리 시스템 - Patient Application
+### # 프로젝트 소개 -> ([Github: HRMS Introduction](https://github.com/sinb57/HRMS-Introduction))
+## :book: 목차
+* <a href="#head1">프로젝트 설계</a>
+  * <a href="#head11">기능별 요구사항</a>
+  * <a href="#head12">UI 프로토타이핑</a>
+* <a href="#head2">프로젝트 구현</a> >>>> 작업중
+  * <a href="#head21">클래스 구조</a>
+  * <a href="#head21">클래스 구조</a>
+</br>
 
-## :pushpin: 프로젝트 소개
-언택트 시대에 따른 비대면 시스템!! 보다 편한 예약과 한 눈에 볼 수 있는 시스템이 없을까?
+***
+## <p id="head1"></p>:pushpin: 프로젝트 설계
+### <p id="head11"></p> :label: 기능별 요구사항
+#### 1. 로그인
+- 어플리케이션 실행 시 로그인을 요구한다.
+  (로그인이 인증된 사용자만이 서비스를 사용할 수 있다.)
+- 계정이 없을 시 회원가입을 통해 계정 생성을 할 수 있다.
+</br>
 
-호텔스 컴바인, 배달의 민족 등과 같이 한눈에 알아보는 병원 예약 관리 시스템입니다.
+#### 2. 회원가입
+- 회원가입 항목은 다음과 같다. (아이디, 비밀번호, 이름, 전화번호)
+- 회원가입 시 비밀번호 입력은 두번 요구되며, 두 입력값이 일치해야 한다.
+</br>
 
-### :point_right: 차별화 포인트
-- 예약 접수 시 증상 입력을 통해 병원에 사전 알림
-- 사용자의 편의성을 위해 고객은 어플리케이션, 병원은 데스크탑 형태로 제작
+#### 3. 병원 목록
+- 페이지당 4개의 병원을 보여준다.
+- 표시되는 병원 정보는 다음과 같다.
+(병원명, 병원주소, 진료과목, 영업상태)
+- 영업상태는 현시각 기준 영업상황에 따라 다음 항목 중 하나로 표시된다.
+(영업중 / 휴무 / 영업마감 / 식사중)
+- 병원 조회 항목은 다음과 같다.
+    - 상단에 주소를 지정하면 해당 지역의 병원 리스트를 보여준다. (주소 형식 : 도/시/구)
+    - 체크박스를 이용하여 현시각 영엽중인 병원만 조회할 수 있다.
+    - 병원명을 검색하여 병원을 조회할 수 있다.
+    - 진료 과목을 선택하여 병원을 조회할 수 있다.
+</br>
 
-## :calendar: 프로젝트 기간
-2020.10 ~ 2020.12
+#### 4. 병원 상세 보기
+- 다음과 같은 병원 정보가 표시된다.
+(병원명, 연락처, 주소, 진료과목, 진료시간)
+- 진료 기록이 있는 경우, 최근 진료 시각이 표시된다.
+- 현재 예약 중이라면 예약 버튼이 비활성화되며, 아닐 시 예약 버튼이 활성화된다.
+</br>
 
-## :family: 팀원 소개
-- 송인봉: https://github.com/sinb57
-- 박준형: https://github.com/oopsys6
+#### 5. 병원 예약
+- 병원 예약 시각을 지정할 수 있다.
+- 진료받고자 하는 과목을 선택할 수 있다.
+- 진료과목에 따라 하단에 증상 리스트가 변경된다.
+- 증상은 복수선택이 가능하다.
+- 예약 버튼을 누르면 입력된 내용이 제출되며, 입력된 시각에 예약을 할 수 없다면
+  "해당 시간에 예약이 가득 찼습니다." 문구가 출력된다. (동일 시간 예약은 최대 3명까지 가능)
+</br>
 
-## :books: 기술 스택
-- <b>FRONT-END</b>: Java Swing
-- <b>BACK-END</b>: Java, Python(data crawling)
-- <b>ETC</b>: Github
+#### 6. 예약 목록
+- 페이지당 4개의 예약 기록 정보를 보여준다.
+- 표시되는 예약 기록 정보는 다음과 같다.
+  (예약시각, 병원명, 병원주소, 예약상태)
+- 예약상태는 현시각 기준 예약/진료 상황에 따라 다음 항목 중 하나로 표시된다.
+  (예약중 / 예약취소 / 진료취소 / 진료완료)
+</br>
 
-## :computer: VIEW
+#### 7. 예약 기록 상세 조회
+- 다음과 같은 예약 기록 정보가 표시된다.
+  (예약시각, 예약상태, 병원정보)
+- 예약상태가 현재 예약중이면 "예약취소" 버튼이,
+  예약중이 아니라면 "예약하기" 버튼이 활성화된다.
+</br>
 
-### :boy: 환자 UI
-- #### 로그인, 회원가입
-![](https://i.imgur.com/MFnLcid.png)
-<br>
-- #### 병원 리스트
-![](https://i.imgur.com/mEbarI8.png)
-![](https://i.imgur.com/ShnEvGl.png)
-<br>
-- #### 병원 정보
-![](https://i.imgur.com/JE01clL.png)
-<br>
-- #### 예약 접수
-![](https://i.imgur.com/Qf9RJVY.png)
-<br>
-- #### 예약 리스트
-![](https://i.imgur.com/7VBvBUW.png)
-<br>
-- #### 예약 정보
-![](https://i.imgur.com/KhLdXJl.png)
-<br>
-- #### 개인 정보, 비밀번호 변경
-![](https://i.imgur.com/Vej3MbQ.png)
-<br>
+#### 8. 개인정보
+- 회원가입 과정에서 입력한 개인정보를 확인할 수 있다.
+  (아이디, 이름, 전화번호)
+- 비밀번호의 경우, 새로운 비밀번호로 변경 가능하다.
+- 로그아웃을 진행할 수 있다.
+- 회원 탈퇴를 진행할 수 있다.
+</br>
+</br>
 
-### :hospital: 병원 UI
-- #### 로그인
-![](https://i.imgur.com/eVJmqh3.png)
-<br>
-- #### 대기 현황
-![](https://i.imgur.com/8wL3Mrd.png)
-<br>
-- #### 진료 기록
-![](https://i.imgur.com/mVBzInH.png)
-<br>
-- #### 진료 기록 자세히
-![](https://i.imgur.com/1u5fixG.png)
-<br>
-- #### 병원 정보
-![](https://i.imgur.com/VC7tRwW.png)
-<br>
-- #### 병원 비밀번호 변경
-![](https://i.imgur.com/j3Rff85.png)
+## <p id="head12"></p>UI 프로토타이핑
+https://ovenapp.io/view/6j5hShRxKGkMVjzI2Isv8J6jLlUuHE4W/
+#### 1. 로그인 / 회원가입
+![](https://imgur.com/nVU8Oqb.png)
+
+#### 2. 병원 목록
+![](https://imgur.com/2TxDrfb.png)
+
+#### 3. 병원 상세 조회
+![](https://imgur.com/QOFIdQF.png)
+
+#### 4. 병원 예약
+![](https://imgur.com/zRbyOJ0.png)
+
+#### 5. 예약 목록 / 예약 기록 상세 조회
+![](https://imgur.com/Ib6NsMM.png)
+
+#### 6. 마이페이지
+![](https://imgur.com/RtECc6Q.png)
+</br>
+</br>
 
 
-### 함께 한 GIT REPOSITORY
-- https://github.com/oopsys6/Java_HRMS-Hospital_GUI
-- https://github.com/oopsys6/Java_HRMS-Patient_GUI
-- https://github.com/sinb57/Java_HRMS-Server
-- https://github.com/sinb57/Java_HRMS-Hospital
-- https://github.com/sinb57/Java_HRMS-Patient
+***
+
+# <p id="head2"></p>:building_construction: 시스템 구조 및 기능
+![](https://imgur.com/IzlaPs4.png)
+
+### <p id="head21"></p>:round_pushpin: 서버 어플리케이션 ([Github: Java_HRMS_Server](https://github.com/sinb57/Java_HRMS-Server))
+    - 데이터 관리 (소켓 통신, 파일시스템)
+
+### <p id="head22"></p>:round_pushpin: 환자 어플리케이션 ([Github: Java_HRMS_Patient](https://github.com/sinb57/Java_HRMS-Server))
+    - 로그인 / 회원가입
+    - 병원 조회
+    - 병원 예약
+    - 예약 기록 조회
+
+### <p id="head23"></p>:round_pushpin: 병원 어플리케이션 ([Github: Java_HRMS_Hospital](https://github.com/sinb57/Java_HRMS-Server))
+    - 로그인
+    - 대기 현황 관리
+    - 진료 처리 및 예약 취소
+    - 진료 기록 조회
+</br>
+</br>
+
+## <p id="head3"></p>:computer: VIEW 
+
+### <p id="head31"></p>:boy: 환자 어플리케이션 UI
