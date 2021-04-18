@@ -2,16 +2,16 @@
 ### # 프로젝트 소개 -> ([Github: HRMS Introduction](https://github.com/sinb57/HRMS-Introduction))
 ## :book: 목차
 * <a href="#head1">프로젝트 설계</a>
-  * <a href="#head11">기능별 요구사항</a>
+  * <a href="#head11">주요기능 요구사항</a>
   * <a href="#head12">UI 프로토타이핑</a>
 * <a href="#head2">프로젝트 구현</a> >>>> 작업중
-  * <a href="#head21">클래스 구조</a>
+  * <a href="#head21">시스템 흐름도</a>
   * <a href="#head21">클래스 구조</a>
 </br>
 
 ***
 ## <p id="head1"></p>:pushpin: 프로젝트 설계
-### <p id="head11"></p> :label: 기능별 요구사항
+### <p id="head11"></p> :label: 주요기능 요구사항
 #### 1. 로그인
 - 어플리케이션 실행 시 로그인을 요구한다.
   (로그인이 인증된 사용자만이 서비스를 사용할 수 있다.)
@@ -68,7 +68,7 @@
 - 회원 탈퇴를 진행할 수 있다.
 </br>
 
-## <p id="head12"></p>UI 프로토타이핑
+## <p id="head12"></p> :iphone: UI 프로토타이핑
 https://ovenapp.io/view/6j5hShRxKGkMVjzI2Isv8J6jLlUuHE4W/
 #### 1. 로그인 / 회원가입
 ![](https://imgur.com/nVU8Oqb.png)
@@ -93,26 +93,14 @@ https://ovenapp.io/view/6j5hShRxKGkMVjzI2Isv8J6jLlUuHE4W/
 
 ***
 
-# <p id="head2"></p>:building_construction: 시스템 구조 및 기능
-![](https://imgur.com/IzlaPs4.png)
+## <p id="head2"></p>:building_construction: 프로젝트 구현
 
-### <p id="head21"></p>:round_pushpin: 서버 어플리케이션 ([Github: Java_HRMS_Server](https://github.com/sinb57/Java_HRMS-Server))
-    - 데이터 관리 (소켓 통신, 파일시스템)
-
-### <p id="head22"></p>:round_pushpin: 환자 어플리케이션 ([Github: Java_HRMS_Patient](https://github.com/sinb57/Java_HRMS-Server))
-    - 로그인 / 회원가입
-    - 병원 조회
-    - 병원 예약
-    - 예약 기록 조회
-
-### <p id="head23"></p>:round_pushpin: 병원 어플리케이션 ([Github: Java_HRMS_Hospital](https://github.com/sinb57/Java_HRMS-Server))
-    - 로그인
-    - 대기 현황 관리
-    - 진료 처리 및 예약 취소
-    - 진료 기록 조회
-</br>
+### <p id="head21"></p>:round_pushpin: 주요처리 흐름도
+![](https://imgur.com/5dFCC4B.png)
 </br>
 
-## <p id="head3"></p>:computer: VIEW 
+### <p id="head22"></p>:round_pushpin: asdfzxcv
 
-### <p id="head31"></p>:boy: 환자 어플리케이션 UI
+
+</br>
+</br>
