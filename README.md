@@ -4,9 +4,6 @@
 * <a href="#head1">프로젝트 설계</a>
   * <a href="#head11">주요기능 요구사항</a>
   * <a href="#head12">UI 프로토타이핑</a>
-* <a href="#head2">프로젝트 구현</a> >>>> 작업중
-  * <a href="#head21">시스템 흐름도</a>
-  * <a href="#head21">클래스 구조</a>
 </br>
 
 ***
@@ -90,16 +87,6 @@ https://ovenapp.io/view/6j5hShRxKGkMVjzI2Isv8J6jLlUuHE4W/
 </br>
 </br>
 
-
-***
-
-## <p id="head2"></p>:building_construction: 프로젝트 구현
-
-### <p id="head21"></p>:round_pushpin: 주요처리 흐름도
-![](https://imgur.com/5dFCC4B.png)
-</br>
-
-### <p id="head22"></p>:round_pushpin: asdfzxcv
 
 
 </br>
